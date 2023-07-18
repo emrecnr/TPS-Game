@@ -14,20 +14,32 @@ namespace TPSPrototype.Controllers
     {
         IInput _input;
         IMover _mover;
+        IRotator _xRotation;
+        IRotator _yRotation;
+
         PlayerAnimation _playerAnimation;
         Vector3 _moveDirection;
         float _moveSpeed=5f;
+
+        [SerializeField] Transform cameraTransform;
+        public Transform CameraTransform => cameraTransform;
         private void Awake()
         {
             _input = GetComponent<IInput>();
             _mover = new CharacterControllerMover(this, _moveSpeed);
             _playerAnimation = new PlayerAnimation(this);
+            _xRotation = new RotationX(this);
+            _yRotation = new RotationY(this);
 
         }
 
         private void Update()
         {
+            _xRotation.RotateAction(_input.Rotation.x);
+            _yRotation.RotateAction(_input.Rotation.y);
             _moveDirection = _input.MoveDirection;
+            
+            Debug.Log(_input.Rotation.y);
             
         }
         private void FixedUpdate()
