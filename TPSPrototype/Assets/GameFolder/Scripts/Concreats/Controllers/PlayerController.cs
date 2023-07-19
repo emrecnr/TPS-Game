@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TPSPrototype.Abstracts.Controllers;
 using TPSPrototype.Abstracts.Inputs;
 using TPSPrototype.Abstracts.Movements;
 using TPSPrototype.Animations;
@@ -10,7 +11,7 @@ using UnityEngine;
 namespace TPSPrototype.Controllers
 {
 
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IEntityController
     {
         IInput _input;
         IMover _mover;
@@ -23,6 +24,11 @@ namespace TPSPrototype.Controllers
 
         [SerializeField] Transform cameraTransform;
         public Transform CameraTransform => cameraTransform;
+
+        public Transform Controller => transform;
+
+        
+
         [SerializeField] WeaponController _currentWeapon;
 
         private void Awake()

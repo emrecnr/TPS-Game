@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TPSPrototype.Abstracts.Controllers;
 using TPSPrototype.Abstracts.Movements;
 using TPSPrototype.Controllers;
 using UnityEngine;
@@ -11,11 +12,11 @@ namespace TPSPrototype.Movements
     {
         CharacterController _characterController;
         float _moveSpeed;
+        
 
-
-        public CharacterControllerMover(PlayerController playerController, float moveSpeed)
+        public CharacterControllerMover(IEntityController entityContoller, float moveSpeed)
         {
-            _characterController = playerController.GetComponent<CharacterController>();
+            _characterController = entityContoller.Controller.GetComponent<CharacterController>();
             _moveSpeed = moveSpeed;
         }
         public void MoveAction(Vector3 direction)
