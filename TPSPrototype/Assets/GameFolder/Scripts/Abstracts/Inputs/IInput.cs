@@ -8,6 +8,7 @@ namespace TPSPrototype.Abstracts.Inputs
     {
         public Vector3 MoveDirection { get;  }
         public Vector2 Rotation { get; }
+        public bool CanFire { get; }
 
 
     }

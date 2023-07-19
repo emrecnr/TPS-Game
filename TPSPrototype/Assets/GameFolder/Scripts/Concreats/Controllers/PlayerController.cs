@@ -23,6 +23,8 @@ namespace TPSPrototype.Controllers
 
         [SerializeField] Transform cameraTransform;
         public Transform CameraTransform => cameraTransform;
+        [SerializeField] WeaponController _currentWeapon;
+
         private void Awake()
         {
             _input = GetComponent<IInput>();
@@ -38,8 +40,12 @@ namespace TPSPrototype.Controllers
             _xRotation.RotateAction(_input.Rotation.x);
             _yRotation.RotateAction(_input.Rotation.y);
             _moveDirection = _input.MoveDirection;
+            if (_input.CanFire)
+            {
+                _currentWeapon.Fire();
+            }
             
-            Debug.Log(_input.Rotation.y);
+            
             
         }
         private void FixedUpdate()
