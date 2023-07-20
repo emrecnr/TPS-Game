@@ -20,7 +20,7 @@ namespace TPSPrototype.Controllers
 
         PlayerAnimation _playerAnimation;
         Vector3 _moveDirection;
-        float _moveSpeed=5f;
+        
 
         [SerializeField] Transform cameraTransform;
         public Transform CameraTransform => cameraTransform;
@@ -34,7 +34,7 @@ namespace TPSPrototype.Controllers
         private void Awake()
         {
             _input = GetComponent<IInput>();
-            _mover = new CharacterControllerMover(this, _moveSpeed);
+            _mover = new CharacterControllerMover(this);
             _playerAnimation = new PlayerAnimation(this);
             _xRotation = new RotationX(this);
             _yRotation = new RotationY(this);

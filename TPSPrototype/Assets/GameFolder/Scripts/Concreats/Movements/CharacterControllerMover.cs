@@ -11,14 +11,17 @@ namespace TPSPrototype.Movements
     public class CharacterControllerMover : IMover
     {
         CharacterController _characterController;
-        float _moveSpeed;
-        
+        float _moveSpeed=5f;
+        public float MoveSpeed => _moveSpeed;
 
-        public CharacterControllerMover(IEntityController entityContoller, float moveSpeed)
+        public CharacterControllerMover(IEntityController entityContoller)
         {
             _characterController = entityContoller.Controller.GetComponent<CharacterController>();
-            _moveSpeed = moveSpeed;
+            
         }
+
+        
+
         public void MoveAction(Vector3 direction)
         {
             if (direction == Vector3.zero) { return; }

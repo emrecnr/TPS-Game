@@ -9,8 +9,10 @@ namespace TPSPrototype.Movements
 {
     public class NavMeshMover : IMover
     {
-        float _moveSpeed = 2f;
         NavMeshAgent _enemyAgent;
+        float _moveSpeed = 2f;
+        public float MoveSpeed => _enemyAgent.speed;
+        
         public NavMeshMover(IEntityController entityController)
         {
             _enemyAgent = entityController.Controller.GetComponent<NavMeshAgent>();
