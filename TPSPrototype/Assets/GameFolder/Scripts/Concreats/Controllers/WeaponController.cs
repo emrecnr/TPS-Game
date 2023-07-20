@@ -1,6 +1,9 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using TPSPrototype.Abstracts.Combats;
+using TPSPrototype.Combats;
+using TPSPrototype.ScriptableObjects;
 using UnityEngine;
 
 namespace TPSPrototype.Controllers
@@ -11,27 +14,28 @@ namespace TPSPrototype.Controllers
 
         
         [SerializeField]bool _canFire;
-        [SerializeField] float _attackDelay = 0.2f;
-        [SerializeField] float _distance = 300f;
-        [SerializeField] Camera _camera;
-        [SerializeField] LayerMask _layerMask;
+        
+        [SerializeField] Transform _cameraTransform;
+        [SerializeField] AttackSO _attackSO;
+        
         float _currentTime = 0f;
+        IAttackType _attackType;
+
+        private void Awake()
+        {
+            _attackType = new GunAttack(_attackSO,_cameraTransform);
+        }
         private void Update()
         {
             _currentTime += Time.deltaTime;
-            _canFire = _currentTime > _attackDelay;
+            _canFire = _currentTime > _attackSO.AttackDelay;
            
         }
         public void Fire()
         {
             if (!_canFire) { return; }
 
-            Ray ray = _camera.ViewportPointToRay(Vector3.one / 2f);
-            if (Physics.Raycast(ray,out RaycastHit hit,_distance,_layerMask))
-            {
-                Debug.Log(hit.collider.gameObject.name);
-               
-            }
+            _attackType.Attack();
             
             _currentTime = 0f;  
         }
