@@ -19,6 +19,7 @@ namespace TPSPrototype.Controllers
         IRotator _yRotation;
 
         PlayerAnimation _playerAnimation;
+        EquipController _equipController;
         Vector3 _moveDirection;
         
 
@@ -29,7 +30,7 @@ namespace TPSPrototype.Controllers
 
         
 
-        [SerializeField] WeaponController _currentWeapon;
+       
 
         private void Awake()
         {
@@ -38,6 +39,7 @@ namespace TPSPrototype.Controllers
             _playerAnimation = new PlayerAnimation(this);
             _xRotation = new RotationX(this);
             _yRotation = new RotationY(this);
+            _equipController = GetComponent<EquipController>();
 
         }
 
@@ -48,7 +50,11 @@ namespace TPSPrototype.Controllers
             _moveDirection = _input.MoveDirection;
             if (_input.CanFire)
             {
-                _currentWeapon.Fire();
+                _equipController.Equip.Fire();
+            }
+            if (_input.IsChangeWeapon)
+            {
+                _equipController.ChangeWeapon();
             }
             
             
@@ -61,6 +67,7 @@ namespace TPSPrototype.Controllers
         private void LateUpdate()
         {
             _playerAnimation.SetMoveAnimation(_moveDirection.magnitude);
+            _playerAnimation.SetTriggerFireAnimation(_input.CanFire);
         }
 
     }

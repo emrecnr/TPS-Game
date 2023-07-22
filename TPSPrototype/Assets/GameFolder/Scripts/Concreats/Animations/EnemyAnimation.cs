@@ -22,6 +22,10 @@ namespace TPSPrototype.Animations
             _enemyAnimator.SetFloat("moveSpeed", _navMeshAgent.velocity.magnitude);
             Debug.Log(_enemyAnimator);
         }
+        public void SetBoolAttackAnimation(bool canAttack)
+        {
+            _enemyAnimator.SetBool("isAttack",canAttack);
+        }
     }
 
 }

@@ -6,9 +6,10 @@ namespace TPSPrototype.Abstracts.Inputs
 {
     public interface  IInput 
     {
-        public Vector3 MoveDirection { get;  }
-        public Vector2 Rotation { get; }
-        public bool CanFire { get; }
+         Vector3 MoveDirection { get;  }
+         Vector2 Rotation { get; }
+        bool CanFire { get; }
+        bool IsChangeWeapon { get; }
 
 
     }

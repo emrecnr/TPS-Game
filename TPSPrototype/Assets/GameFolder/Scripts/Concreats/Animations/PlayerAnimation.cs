@@ -18,6 +18,12 @@ namespace TPSPrototype.Animations
         {
             _playerAnimator.SetFloat("moveSpeed", moveSpeed);
         }
+        public void SetTriggerFireAnimation(bool isFiring)
+        {
+            
+            _playerAnimator.SetBool("isFire",isFiring);
+
+        }
     }
 }
 

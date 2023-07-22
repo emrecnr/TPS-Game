@@ -15,6 +15,7 @@ namespace TPSPrototype.Combats
 
         [SerializeField] HealthSO _healthInfo;
 
+        public event System.Action<int> OnHealthChange;
         private void Awake()
         {
             currentHealth = _healthInfo.Maxhealth;
@@ -24,6 +25,7 @@ namespace TPSPrototype.Combats
             if (IsDead) return;
             currentHealth -= damageAmount;
             Debug.Log(IsDead);
+            OnHealthChange?.Invoke(currentHealth);
         }
     }
 }
