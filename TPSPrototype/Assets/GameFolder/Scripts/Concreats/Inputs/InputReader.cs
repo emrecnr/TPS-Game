@@ -9,11 +9,13 @@ namespace TPSPrototype.Inputs
 {
     public class InputReader : MonoBehaviour, IInput
     {
+        int _index;
         public Vector3 MoveDirection { get; private set; }
 
         public Vector2 Rotation { get; private set; }
         public bool CanFire { get; private set; }
 
+        public bool IsChangeWeapon { get; private set; }
 
         public void OnRotation(InputAction.CallbackContext context)
         {
@@ -32,6 +34,22 @@ namespace TPSPrototype.Inputs
             CanFire = context.ReadValueAsButton();
             Debug.Log(CanFire);
         }
+        public void OnChangeWeapon(InputAction.CallbackContext context)
+        {
+            if (IsChangeWeapon && context.action.triggered)
+            {
+                return;
+            }
+            StartCoroutine(WaitOnFrame());
+            IsChangeWeapon = context.ReadValueAsButton();
+        }
+        IEnumerator WaitOnFrame()
+        {
+            IsChangeWeapon = true && _index % 2 == 0;
+            yield return new WaitForEndOfFrame();
+            IsChangeWeapon = false;
+        }
+
         
     }
 
