@@ -17,13 +17,14 @@ namespace TPSPrototype.Controllers
         
         [SerializeField] Transform _cameraTransform;
         [SerializeField] AttackSO _attackSO;
-        
+        public AttackSO AttackSO => _attackSO;
+
         float _currentTime = 0f;
         IAttackType _attackType;
 
         private void Awake()
         {
-            _attackType = new GunAttack(_attackSO,_cameraTransform);
+            _attackType = _attackSO.GetAttackType(_cameraTransform);
         }
         private void Update()
         {
@@ -33,11 +34,12 @@ namespace TPSPrototype.Controllers
         }
         public void Fire()
         {
+            
             if (!_canFire) { return; }
-
+            _currentTime = 0f;
             _attackType.Attack();
             
-            _currentTime = 0f;  
+             
         }
         
 

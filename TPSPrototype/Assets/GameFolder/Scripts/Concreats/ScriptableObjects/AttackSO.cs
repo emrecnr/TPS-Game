@@ -28,7 +28,7 @@ namespace TPSPrototype.ScriptableObjects
             {
                 return new GunAttack(this,transform);
             }
-            else
+            else 
             {
                 return new KnifeAttack(transform,this);
             }
