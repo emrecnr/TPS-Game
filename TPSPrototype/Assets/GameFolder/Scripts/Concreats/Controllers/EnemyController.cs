@@ -5,6 +5,7 @@ using TPSPrototype.Abstracts.Controllers;
 using TPSPrototype.Abstracts.Movements;
 using TPSPrototype.Animations;
 using TPSPrototype.Combats;
+using TPSPrototype.EnemyStates;
 using TPSPrototype.Movements;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,7 +21,9 @@ namespace TPSPrototype.Controllers
         IHealth _health;
         EnemyAnimation _enemyAnimation;
         EquipController _equipController;
+        StateMachine _stateMachine;
         bool _canAttack;
+        public bool CanAttack => Vector3.Distance(transform.position, _playerPref.transform.position) <= _navMeshAgent.stoppingDistance;
 
         private void Awake()
         {
@@ -29,20 +32,32 @@ namespace TPSPrototype.Controllers
             _enemyAnimation = new EnemyAnimation(this);
             _health = GetComponent<IHealth>();
             _equipController = GetComponent<EquipController>();
+            _stateMachine = new StateMachine();
 
+        }
+        private void Start()
+        {
+            AttackState attackState = new AttackState();
+            ChaseState chaseState = new ChaseState();
+            DeadState deadState = new DeadState();
+            _stateMachine.AddState(chaseState,attackState,()=>CanAttack);
+            _stateMachine.AddState(attackState, chaseState, () => !CanAttack);
+            _stateMachine.AddAnyState(deadState,() => _health.IsDead);
+            _stateMachine.SetState(chaseState);
         }
         private void Update()
         {
             if (_health.IsDead) { return; }
             _mover.MoveAction(_playerPref.transform.position);
 
-            _canAttack = Vector3.Distance(transform.position, _playerPref.transform.position) <= _navMeshAgent.stoppingDistance;
+            
+            _stateMachine.Tick();
         }
         private void FixedUpdate()
         {
+            if (_canAttack ) { _equipController.Equip.Fire(); }
            
 
-            if (_canAttack ) { _equipController.Equip.Fire(); }
         }
         private void LateUpdate()
         {

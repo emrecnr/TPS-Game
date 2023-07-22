@@ -12,7 +12,7 @@ namespace TPSPrototype.States
        public  IState From { get; }
        public System.Func<bool> Condition{get;}
 
-        public StateTransformer(IState to, IState from, Func<bool> condition)
+        public StateTransformer(IState from, IState to, Func<bool> condition)
         {
             To = to;
             From = from;
