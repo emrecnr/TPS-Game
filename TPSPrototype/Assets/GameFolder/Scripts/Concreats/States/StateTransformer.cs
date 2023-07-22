@@ -8,9 +8,9 @@ namespace TPSPrototype.States
 {
     public class StateTransformer
     {
-        IState To { get;}
-        IState From { get; }
-        System.Func<bool> Condition{get;}
+       public IState To { get;}
+       public  IState From { get; }
+       public System.Func<bool> Condition{get;}
 
         public StateTransformer(IState to, IState from, Func<bool> condition)
         {
